@@ -28,20 +28,25 @@ class Product extends Component {
         });
     }
     buttonSave() {
-        this.setState({editing: false})
+        this.setState({editing: false});
+        this.props.edit(this.props.index, this.txtName.value);
+    }
+    buttonDelete() {
+        this.props.delete(this.props.index);
     }
     renderNomal () {
         return <div className="col-md-12 product-info">
                     <div className="form-group">
                         <button className="btn btn-info" onClick={() => this.buttonEdit()}>Edit</button>
-                        <button className="btn btn-danger">Remove</button>
+                        <button className="btn btn-danger" onClick={() => this.buttonDelete()}>Remove</button>
                     </div>
                 </div>
     }
     renderForm () {
         return <div className="col-md-12">
                     <div className="form-group">
-                        <input type="text" className="form-control" defaultValue={this.props.children}></input>
+                        <input type="text" className="form-control" defaultValue={this.props.children} ref={(input) => {this.txtName = input}}></input>
+                        <input type="text" className="form-control" defaultValue={this.props.price} ref={(input) => {this.txtPrice = input}}></input>
                         <button className="btn btn-primary" onClick={() => this.buttonSave()}>Save</button>
                     </div>
                 </div>
@@ -54,8 +59,6 @@ class Product extends Component {
         }
     }
     render() {
-        console.log(this.props);
-        
         return (
             <div className="col-sm-4 col-md-4">
                 <img src={this.props.image} alt="" className="img-responsive" />
